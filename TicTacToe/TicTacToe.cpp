@@ -5,7 +5,8 @@
 int TicTacToe::win_counter[N_POS + 1] = {},
     TicTacToe::lose_counter[N_POS + 1] = {},
     TicTacToe::draw_counter = 0,
-    TicTacToe::leaf_counter = 0;
+    TicTacToe::leaf_counter = 0,
+    TicTacToe::node_counter = 0;
 
 bool TicTacToe::is_win() const {
     const int pt = parent->turn;
@@ -50,11 +51,13 @@ bool TicTacToe::is_win() const {
 
 TicTacToe::TicTacToe():
     turn(MAX), move(-1), depth(0), s(), parent(nullptr) {
+    ++node_counter;
     search();
 }
 
 TicTacToe::TicTacToe(const TicTacToe *parent, int move):
     turn(parent->turn == MAX ? MIN : MAX), move(move), depth(parent->depth + 1), parent(parent) {
+    ++node_counter;
     std::copy(std::begin(parent->s), std::end(parent->s), s);
     s[move] = parent->turn;
     bool iswin = is_win(),
@@ -63,12 +66,13 @@ TicTacToe::TicTacToe(const TicTacToe *parent, int move):
         // Game just ended.
         ++leaf_counter;
         if (iswin) {
+            // Someone just won.
             if (parent->turn == MAX)
                 ++win_counter[depth];
             else
                 ++lose_counter[depth];
         } else {
-            // draw
+            // Draw
             ++draw_counter;
         }
     } else {

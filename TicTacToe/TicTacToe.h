@@ -3,7 +3,7 @@
 #include <iostream>
 
 // Switch alpha-beta pruning on or off
-//#define PRUNE
+#define ABPRUNE 0
 
 // Represents a tic-tac-toe game state including the history,
 // i.e. a node in the game tree.
@@ -15,11 +15,9 @@ public:
     // For statistical purpose
     static int win_counter[],
                lose_counter[],
-               draw_counter;
-
-    // Note that even when pruning is on, leaf_counter is the number of valid sequences,
-    // which is more then the number of distinct final states.
-    static int leaf_counter;
+               draw_counter,
+               leaf_counter,
+               node_counter;
 
     // Construct the root node and its descendants (i.e. the complete game tree)
     TicTacToe();
