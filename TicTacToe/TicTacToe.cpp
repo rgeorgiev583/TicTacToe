@@ -2,45 +2,64 @@
 #include <cstdio>
 #include <iterator>
 
+int TicTacToe::leaf_counter = 0;
+
+bool TicTacToe::is_win() const {
+    const int pt = parent->turn;
+    switch (move) {
+    case 0:
+        return s[1] == pt && s[2] == pt ||
+               s[3] == pt && s[6] == pt ||
+               s[4] == pt && s[8] == pt;
+    case 1:
+        return s[0] == pt && s[2] == pt ||
+               s[4] == pt && s[7] == pt;
+    case 2:
+        return s[1] == pt && s[0] == pt ||
+               s[5] == pt && s[8] == pt ||
+               s[4] == pt && s[6] == pt;
+    case 3:
+        return s[4] == pt && s[5] == pt ||
+               s[0] == pt && s[6] == pt;
+    case 4:
+        return s[3] == pt && s[5] == pt ||
+               s[1] == pt && s[7] == pt ||
+               s[0] == pt && s[8] == pt ||
+               s[2] == pt && s[6] == pt;
+    case 5:
+        return s[4] == pt && s[3] == pt ||
+               s[2] == pt && s[8] == pt;
+    case 6:
+        return s[7] == pt && s[8] == pt ||
+               s[3] == pt && s[0] == pt ||
+               s[4] == pt && s[2] == pt;
+    case 7:
+        return s[6] == pt && s[8] == pt ||
+               s[4] == pt && s[1] == pt;
+    case 8:
+        return s[7] == pt && s[6] == pt ||
+               s[5] == pt && s[2] == pt ||
+               s[4] == pt && s[0] == pt;
+    default:
+        return false;
+    }
+}
+
 TicTacToe::TicTacToe():
-    turn(MAX), s(), parent(nullptr) {
-    
+    turn(MAX), move(-1), depth(1), s(), parent(nullptr) {
+    search();
 }
 
 TicTacToe::TicTacToe(const TicTacToe *parent, int move):
-    turn(parent->turn == MAX ? MIN : MAX), parent(parent) {
+    turn(parent->turn == MAX ? MIN : MAX), move(move), depth(parent->depth + 1), parent(parent) {
     std::copy(std::begin(parent->s), std::end(parent->s), s);
     s[move] = parent->turn;
-    // Check if the game is over
-    switch(move) {
-    case 0:
-        
-        break;
-    case 1:
-
-        break;
-    case 2:
-
-        break;
-    case 3:
-
-        break;
-    case 4:
-
-        break;
-    case 5:
-
-        break;
-    case 6:
-
-        break;
-    case 7:
-
-        break;
-    case 8:
-
-        break;
-    }
+    bool iswin = is_win();
+    if (iswin || depth == N_POS) {
+        // This is a leaf node.
+        ++leaf_counter;
+    } else
+        search();
 }
 
 void TicTacToe::search() {
@@ -48,15 +67,13 @@ void TicTacToe::search() {
         if (s[p] == ZERO) {
             // ReSharper disable once CppNonReclaimedResourceAcquisition
             children[p] = new TicTacToe(this, p);
-
-        } else
-            children[p] = nullptr;
+        }
     }
 }
 
 TicTacToe::~TicTacToe() {
     for (TicTacToe *child : children)
-        delete child;
+        if (child) delete child;
 }
 
 // Visualize a stone
