@@ -12,10 +12,15 @@ public:
     static const int MAX = 1, MIN = -1, ZERO = 0;
     static const int N_POS = 9;
 
+    // For statistical purpose
+    static int win_counter[],
+               lose_counter[],
+               draw_counter;
+
     // Note that even when pruning is on, leaf_counter is the number of valid sequences,
     // which is more then the number of distinct final states.
     static int leaf_counter;
-    
+
     // Construct the root node and its descendants (i.e. the complete game tree)
     TicTacToe();
 
@@ -34,7 +39,7 @@ public:
     // (meaningless for root node)
     const int move;
 
-    // Depth of the node in the tree (1 ~ 9)
+    // Depth of the node in the tree (0 ~ 9)
     const int depth;
 
     // Current MAX's gain
@@ -55,7 +60,7 @@ public:
     TicTacToe *children[N_POS] = {};
     
 private:
-    // Check if the last player has won the game
+    // Check if the last player has just won the game
     bool is_win() const;
 
     // Perform minimax search while constructing child nodes

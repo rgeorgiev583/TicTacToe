@@ -2,7 +2,10 @@
 #include <cstdio>
 #include <iterator>
 
-int TicTacToe::leaf_counter = 0;
+int TicTacToe::win_counter[N_POS + 1] = {},
+    TicTacToe::lose_counter[N_POS + 1] = {},
+    TicTacToe::draw_counter = 0,
+    TicTacToe::leaf_counter = 0;
 
 bool TicTacToe::is_win() const {
     const int pt = parent->turn;
@@ -46,7 +49,7 @@ bool TicTacToe::is_win() const {
 }
 
 TicTacToe::TicTacToe():
-    turn(MAX), move(-1), depth(1), s(), parent(nullptr) {
+    turn(MAX), move(-1), depth(0), s(), parent(nullptr) {
     search();
 }
 
@@ -54,12 +57,24 @@ TicTacToe::TicTacToe(const TicTacToe *parent, int move):
     turn(parent->turn == MAX ? MIN : MAX), move(move), depth(parent->depth + 1), parent(parent) {
     std::copy(std::begin(parent->s), std::end(parent->s), s);
     s[move] = parent->turn;
-    bool iswin = is_win();
-    if (iswin || depth == N_POS) {
-        // This is a leaf node.
+    bool iswin = is_win(),
+         isfull = depth == N_POS;
+    if (iswin || isfull) {
+        // Game just ended.
         ++leaf_counter;
-    } else
+        if (iswin) {
+            if (parent->turn == MAX)
+                ++win_counter[depth];
+            else
+                ++lose_counter[depth];
+        } else {
+            // draw
+            ++draw_counter;
+        }
+    } else {
+        // Search for further cases
         search();
+    }
 }
 
 void TicTacToe::search() {
@@ -73,7 +88,7 @@ void TicTacToe::search() {
 
 TicTacToe::~TicTacToe() {
     for (TicTacToe *child : children)
-        if (child) delete child;
+        delete child;
 }
 
 // Visualize a stone
