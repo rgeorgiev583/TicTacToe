@@ -12,38 +12,38 @@ bool TicTacToe::is_win() const {
     const smallint pt = parent->turn;
     switch (move) {
     case 0:
-        return s[1] == pt && s[2] == pt ||
-               s[3] == pt && s[6] == pt ||
-               s[4] == pt && s[8] == pt;
+        return (s[1] == pt && s[2] == pt) ||
+               (s[3] == pt && s[6] == pt) ||
+               (s[4] == pt && s[8] == pt);
     case 1:
-        return s[0] == pt && s[2] == pt ||
-               s[4] == pt && s[7] == pt;
+        return (s[0] == pt && s[2] == pt) ||
+               (s[4] == pt && s[7] == pt);
     case 2:
-        return s[1] == pt && s[0] == pt ||
-               s[5] == pt && s[8] == pt ||
-               s[4] == pt && s[6] == pt;
+        return (s[1] == pt && s[0] == pt) ||
+               (s[5] == pt && s[8] == pt) ||
+               (s[4] == pt && s[6] == pt);
     case 3:
-        return s[4] == pt && s[5] == pt ||
-               s[0] == pt && s[6] == pt;
+        return (s[4] == pt && s[5] == pt) ||
+               (s[0] == pt && s[6] == pt);
     case 4:
-        return s[3] == pt && s[5] == pt ||
-               s[1] == pt && s[7] == pt ||
-               s[0] == pt && s[8] == pt ||
-               s[2] == pt && s[6] == pt;
+        return (s[3] == pt && s[5] == pt) ||
+               (s[1] == pt && s[7] == pt) ||
+               (s[0] == pt && s[8] == pt) ||
+               (s[2] == pt && s[6] == pt);
     case 5:
-        return s[4] == pt && s[3] == pt ||
-               s[2] == pt && s[8] == pt;
+        return (s[4] == pt && s[3] == pt) ||
+               (s[2] == pt && s[8] == pt);
     case 6:
-        return s[7] == pt && s[8] == pt ||
-               s[3] == pt && s[0] == pt ||
-               s[4] == pt && s[2] == pt;
+        return (s[7] == pt && s[8] == pt) ||
+               (s[3] == pt && s[0] == pt) ||
+               (s[4] == pt && s[2] == pt);
     case 7:
-        return s[6] == pt && s[8] == pt ||
-               s[4] == pt && s[1] == pt;
+        return (s[6] == pt && s[8] == pt) ||
+               (s[4] == pt && s[1] == pt);
     case 8:
-        return s[7] == pt && s[6] == pt ||
-               s[5] == pt && s[2] == pt ||
-               s[4] == pt && s[0] == pt;
+        return (s[7] == pt && s[6] == pt) ||
+               (s[5] == pt && s[2] == pt) ||
+               (s[4] == pt && s[0] == pt);
     default:
         return false;
     }

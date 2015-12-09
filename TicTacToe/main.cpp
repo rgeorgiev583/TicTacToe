@@ -11,7 +11,7 @@ using std::flush;
 
 int main() {
 #if IS_DEBUG
-    cout << "sizeof TicTacToe node: " << sizeof TicTacToe << " bytes\n" << endl;
+    cout << "sizeof TicTacToe node: " << sizeof(TicTacToe) << " bytes\n" << endl;
 #endif
     cout << "Solving Tic-tac-toe with minimax search "
 #if AB_PRUNE
