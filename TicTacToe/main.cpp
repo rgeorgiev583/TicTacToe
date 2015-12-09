@@ -25,8 +25,8 @@ int main() {
         // Root node
         TicTacToe root;
     auto t1 = std::chrono::high_resolution_clock::now();
-    auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
-    cout << "Time elapsed: " << dt.count() << " ms" << endl;
+    auto dt = std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0);
+    cout << "Time elapsed: " << dt.count() / 1000. << " ms" << endl;
 
     cout << "\nPly\tMAX\tMIN\n";
     for (int d = 1; d <= 9; ++d)
@@ -35,7 +35,7 @@ int main() {
     cout << "\nDraws\t"<< root.draw_counter << '\n'
          << "Leaves\t" << root.leaf_counter << '\n'
          << "Nodes\t" << root.node_counter << endl;
-    cout << "\nPayoff at root node: " << static_cast<int>(root.payoff) << endl;
+    cout << "\nPayoff at root node: " << static_cast<int>(root.v) << endl;
     while (play(&root)) { }
     return EXIT_SUCCESS;
 }
@@ -77,17 +77,15 @@ bool play(TicTacToe *it) {
                     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 }
             }
-#if AB_PRUNE
-
-#endif
         } else {
             // Computer move
             if (human == TicTacToe::MAX) {
                 TicTacToe::smallint min = +TicTacToe::INF;
                 for (TicTacToe::smallint p = 0; p < TicTacToe::N_POS; ++p) {
                     if (it->s[p] == TicTacToe::ZERO) {
-                        if (it->children[p]->payoff < min) {
-                            min = it->children[p]->payoff;
+                        TicTacToe *child = it->get_child(p);
+                        if (child->v < min) {
+                            min = child->v;
                             move = p;
                         }
                     }
@@ -96,8 +94,9 @@ bool play(TicTacToe *it) {
                 TicTacToe::smallint max = -TicTacToe::INF;
                 for (TicTacToe::smallint p = 0; p < TicTacToe::N_POS; ++p) {
                     if (it->s[p] == TicTacToe::ZERO) {
-                        if (it->children[p]->payoff > max) {
-                            max = it->children[p]->payoff;
+                        TicTacToe *child = it->get_child(p);
+                        if (child->v > max) {
+                            max = child->v;
                             move = p;
                         }
                     }
@@ -105,11 +104,11 @@ bool play(TicTacToe *it) {
             }
             cout << "Computer move: " << move << endl;
         }
-        it = it->children[move];
+        it = it->get_child(move);
         if (it->depth == TicTacToe::N_POS || it->is_win()) {
             // Game just ended.
             cout << '\n' << *it << flush;
-            TicTacToe::smallint human_payoff = human * it->payoff;
+            TicTacToe::smallint human_payoff = human * it->v;
             if (human_payoff > 0)
                 cout << "You win!" << endl;
             else if (human_payoff < 0)

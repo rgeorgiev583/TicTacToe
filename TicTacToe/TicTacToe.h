@@ -4,7 +4,7 @@
 #include <cstdint>
 
 // Switch alpha-beta pruning on or off
-#define AB_PRUNE 0
+#define AB_PRUNE 1
 
 // Represents a tic-tac-toe game state including the history,
 // i.e. a node in the game tree.
@@ -45,7 +45,11 @@ public:
     //     MIN * (10 - depth)
     // (3) Draw
     //     ZERO
-    smallint payoff;
+    smallint v;
+
+#if AB_PRUNE
+    smallint alpha, beta;
+#endif
 
     // The stone at each board position is MAX, MIN, or NEUTRAL.
     smallint s[N_POS];
@@ -58,21 +62,19 @@ public:
     // nullptr indicates a nonexistent (invalid) child node.
     TicTacToe *children[N_POS] = {};
 
-#if AB_PRUNE
-    void force_search(smallint move);
-#endif
+    TicTacToe *get_child(smallint move);
 
     // Check if the last player has just won the game
     bool is_win() const;
 
-private:
-    // Construct a non-root node and its descendants,
-    // given its parent node and the move (0 ~ 8) from the parent state to the current state
-    TicTacToe(const TicTacToe *parent, smallint move);
-
     // Perform minimax search while constructing child nodes
     // This is called during construction if necessary.
     void search();
+
+private:
+    // Construct a non-root node and its descendants,
+    // given its parent node and the move (0 ~ 8) from the parent state to the current state
+    TicTacToe(const TicTacToe *parent, smallint move, smallint alpha, smallint beta);
 };
 
 // Print the current TicTacToe board to ostream
