@@ -4,19 +4,15 @@
 #include <ios>
 #include <chrono>
 #include "TicTacToe.h"
-#define IS_DEBUG 0
 
 using std::cout;
 using std::cin;
 using std::endl;
 using std::flush;
 
-void play(TicTacToe *it);
+bool play(TicTacToe *it);
 
 int main() {
-#if IS_DEBUG
-    cout << "sizeof TicTacToe node: " << sizeof(TicTacToe) << " bytes\n" << endl;
-#endif
     cout << "Solving Tic-tac-toe with minimax search "
 #if AB_PRUNE
     "WITH"
@@ -40,16 +36,11 @@ int main() {
          << "Leaves\t" << root.leaf_counter << '\n'
          << "Nodes\t" << root.node_counter << endl;
     cout << "\nPayoff at root node: " << static_cast<int>(root.payoff) << endl;
-    for (;;) {        
-        play(&root);
-        cout << "Press enter to play again..." << endl;
-        cin.ignore();
-        cin.get();
-    }
+    while (play(&root)) { }
     return EXIT_SUCCESS;
 }
 
-void play(TicTacToe *it) {
+bool play(TicTacToe *it) {
     cout << "\nChoose an option:\n"
         << "(X) Play as MAX\n"
         << "(O) Play as MIN\n"
@@ -60,7 +51,7 @@ void play(TicTacToe *it) {
         cin >> option;
         switch (option) {
         case 'Q': case 'q':
-            return;
+            return false;
         case 'X': case 'x':
             human = TicTacToe::MAX;
             break;
@@ -80,12 +71,10 @@ void play(TicTacToe *it) {
                 if (0 <= move && move < TicTacToe::N_POS &&
                         it->s[move] == TicTacToe::ZERO)
                     break;
-                else {
-                    cout << "Invalid move!" << endl;
-                    if (!cin) {
-                        cin.clear();
-                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                    }
+                cout << "Invalid move!" << endl;
+                if (!cin) {
+                    cin.clear();
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 }
             }
 #if AB_PRUNE
@@ -127,7 +116,7 @@ void play(TicTacToe *it) {
                 cout << "You lose!" << endl;
             else
                 cout << "Draw!" << endl;
-            break;
+            return true;
         }
     }
 }
