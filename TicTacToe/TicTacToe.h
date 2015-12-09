@@ -11,8 +11,8 @@
 class TicTacToe {
 public:
     typedef int_fast8_t smallint;
-    static const smallint MAX = 1, MIN = -1, ZERO = 0;
-    static const smallint N_POS = 9;
+    static const smallint MAX = 1, MIN = -1, ZERO = 0,
+                          INF = 64, N_POS = 9;
 
     // For statistical purpose
     static int win_counter[],
@@ -38,11 +38,14 @@ public:
     // Depth of the node in the tree (0 ~ 9)
     const smallint depth;
 
-    // Current MAX's gain
-    // MAX: X just won
-    // MIN: O just won
-    // ZERO: draw
-    smallint gain;
+    // Current MAX's payoff
+    // (1) X just won
+    //     MAX * (10 - depth)
+    // (2) O just won
+    //     MIN * (10 - depth)
+    // (3) Draw
+    //     ZERO
+    smallint payoff;
 
     // The stone at each board position is MAX, MIN, or NEUTRAL.
     smallint s[N_POS];
@@ -54,17 +57,21 @@ public:
     // Array containing pointers to the child nodes, indexed by the move (0 ~ 8).
     // nullptr indicates a nonexistent (invalid) child node.
     TicTacToe *children[N_POS] = {};
-    
+
+#if AB_PRUNE
+    void force_search(smallint move);
+#endif
+
+    // Check if the last player has just won the game
+    bool is_win() const;
+
 private:
     // Construct a non-root node and its descendants,
     // given its parent node and the move (0 ~ 8) from the parent state to the current state
     TicTacToe(const TicTacToe *parent, smallint move);
 
-    // Check if the last player has just won the game
-    bool is_win() const;
-
     // Perform minimax search while constructing child nodes
-    // This is called during construction.
+    // This is called during construction if necessary.
     void search();
 };
 

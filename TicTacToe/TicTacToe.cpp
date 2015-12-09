@@ -8,6 +8,12 @@ int TicTacToe::win_counter[N_POS + 1] = {},
     TicTacToe::leaf_counter = 0,
     TicTacToe::node_counter = 0;
 
+#if AB_PRUNE
+void TicTacToe::force_search(smallint move) {
+    
+}
+#endif
+
 bool TicTacToe::is_win() const {
     const smallint pt = parent->turn;
     switch (move) {
@@ -71,9 +77,11 @@ TicTacToe::TicTacToe(const TicTacToe *parent, smallint move):
                 ++win_counter[depth];
             else
                 ++lose_counter[depth];
+            payoff = parent->turn * (10 - depth);
         } else {
             // Draw
             ++draw_counter;
+            payoff = ZERO;
         }
     } else {
         // Search for further cases
@@ -82,11 +90,28 @@ TicTacToe::TicTacToe(const TicTacToe *parent, smallint move):
 }
 
 void TicTacToe::search() {
-    for (smallint p = 0; p < N_POS; ++p) {
-        if (s[p] == ZERO) {
-            // ReSharper disable once CppNonReclaimedResourceAcquisition
-            children[p] = new TicTacToe(this, p);
+    if (turn == MAX) {
+        smallint max = -INF;
+        for (smallint p = 0; p < N_POS; ++p) {
+            if (s[p] == ZERO) {
+                // ReSharper disable once CppNonReclaimedResourceAcquisition
+                children[p] = new TicTacToe(this, p);
+                if (children[p]->payoff > max)
+                    max = children[p]->payoff;
+            }
         }
+        payoff = max;
+    } else {
+        smallint min = +INF;
+        for (smallint p = 0; p < N_POS; ++p) {
+            if (s[p] == ZERO) {
+                // ReSharper disable once CppNonReclaimedResourceAcquisition
+                children[p] = new TicTacToe(this, p);
+                if (children[p]->payoff < min)
+                    min = children[p]->payoff;
+            }
+        }
+        payoff = min;
     }
 }
 
