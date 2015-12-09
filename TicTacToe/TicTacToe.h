@@ -1,10 +1,11 @@
 #ifndef _TIC_TAC_TOE_H
 #define _TIC_TAC_TOE_H
-#include <iostream>
-#include <cstdint>
 
 // Switch alpha-beta pruning on or off
 #define AB_PRUNE 1
+
+#include <iostream>
+#include <cstdint>
 
 // Represents a tic-tac-toe game state including the history,
 // i.e. a node in the game tree.
@@ -47,9 +48,7 @@ public:
     //     ZERO
     smallint v;
 
-#if AB_PRUNE
     smallint alpha, beta;
-#endif
 
     // The stone at each board position is MAX, MIN, or NEUTRAL.
     smallint s[N_POS];

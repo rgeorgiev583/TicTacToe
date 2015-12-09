@@ -10,7 +10,7 @@ int TicTacToe::win_counter[N_POS + 1] = {},
 
 TicTacToe *TicTacToe::get_child(smallint move) {
     if (!children[move])
-        children[move] = new TicTacToe(this, move, -INF, INF);
+        children[move] = new TicTacToe(this, move, -INF, +INF);
     return children[move];
 }
 
@@ -56,21 +56,14 @@ bool TicTacToe::is_win() const {
 }
 
 TicTacToe::TicTacToe():
-    turn(MAX), move(-1), depth(0), 
-#if AB_PRUNE
-    alpha(-INF), beta(+INF),
-#endif
-    s(), parent(nullptr) {
-    ++node_counter;
+        turn(MAX), move(-1), depth(0), alpha(-INF), beta(+INF), s(), parent(nullptr) {
+        ++node_counter;
     search();
 }
 
 TicTacToe::TicTacToe(const TicTacToe *parent, smallint move, smallint alpha, smallint beta):
-    turn(-parent->turn), move(move), depth(parent->depth + 1),
-#if AB_PRUNE
-    alpha(alpha), beta(beta),
-#endif
-    parent(parent) {
+        turn(-parent->turn), move(move), depth(parent->depth + 1),
+        alpha(alpha), beta(beta), parent(parent) {
     ++node_counter;
     std::copy(std::begin(parent->s), std::end(parent->s), s);
     s[move] = parent->turn;
