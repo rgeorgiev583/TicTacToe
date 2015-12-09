@@ -10,7 +10,7 @@ The program (1) searches the game tree using a [minimax](https://en.wikipedia.or
 
 The compiler must support the C++11 standard to compile, e.g. modern versions of [GCC](https://gcc.gnu.org/projects/cxx0x.html) or [Visual Studio](https://msdn.microsoft.com/library/hh567368.aspx).
 
-On Windows, Open the Visual Studio solution [TicTacToe.sln](TicTacToe.sln).
+On Windows, open the Visual Studio solution [TicTacToe.sln](TicTacToe.sln).
 
 On Linux,
 ```
@@ -28,4 +28,4 @@ To be completed...
 
 ## License
 
-This software is licensed under the MIT License. See [License](License).
+This software is licensed under the MIT License. See [LICENSE](LICENSE).
