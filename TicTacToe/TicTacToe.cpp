@@ -56,7 +56,7 @@ TicTacToe::TicTacToe():
 }
 
 TicTacToe::TicTacToe(const TicTacToe *parent, smallint move):
-    turn(parent->turn == MAX ? MIN : MAX), move(move), depth(parent->depth + 1), parent(parent) {
+    turn(-parent->turn), move(move), depth(parent->depth + 1), parent(parent) {
     ++node_counter;
     std::copy(std::begin(parent->s), std::end(parent->s), s);
     s[move] = parent->turn;
