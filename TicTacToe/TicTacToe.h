@@ -1,16 +1,18 @@
 #ifndef _TIC_TAC_TOE_H
 #define _TIC_TAC_TOE_H
 #include <iostream>
+#include <cstdint>
 
 // Switch alpha-beta pruning on or off
-#define ABPRUNE 0
+#define AB_PRUNE 0
 
 // Represents a tic-tac-toe game state including the history,
 // i.e. a node in the game tree.
 class TicTacToe {
 public:
-    static const int MAX = 1, MIN = -1, ZERO = 0;
-    static const int N_POS = 9;
+    typedef int_fast8_t smallint;
+    static const smallint MAX = 1, MIN = -1, ZERO = 0;
+    static const smallint N_POS = 9;
 
     // For statistical purpose
     static int win_counter[],
@@ -22,32 +24,28 @@ public:
     // Construct the root node and its descendants (i.e. the complete game tree)
     TicTacToe();
 
-    // Construct a non-root node and its descendants,
-    // given its parent node and the move (0 ~ 8) from the parent state to the current state
-    TicTacToe(const TicTacToe *parent, int move);
-
     // Destroy the (sub)tree recursively
     ~TicTacToe();
 
     // It is MAX's or MIN's turn.
     // For empty board, turn is MAX.
-    const int turn;
+    const smallint turn;
 
     // The latest move (0 ~ 8) that led to the current state
     // (meaningless for root node)
-    const int move;
+    const smallint move;
 
     // Depth of the node in the tree (0 ~ 9)
-    const int depth;
+    const smallint depth;
 
     // Current MAX's gain
     // MAX: X just won
     // MIN: O just won
-    // ZERO: game is continuing
-    int gain = ZERO;
+    // ZERO: draw
+    smallint gain;
 
     // The stone at each board position is MAX, MIN, or NEUTRAL.
-    int s[N_POS];
+    smallint s[N_POS];
 
     // The previous TicTacToe state (parent node)
     // For the empty board (root node), parent is nullptr
@@ -58,6 +56,10 @@ public:
     TicTacToe *children[N_POS] = {};
     
 private:
+    // Construct a non-root node and its descendants,
+    // given its parent node and the move (0 ~ 8) from the parent state to the current state
+    TicTacToe(const TicTacToe *parent, smallint move);
+
     // Check if the last player has just won the game
     bool is_win() const;
 

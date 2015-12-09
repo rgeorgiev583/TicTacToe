@@ -2,6 +2,7 @@
 #include <iostream>
 #include <chrono>
 #include "TicTacToe.h"
+#define IS_DEBUG 1
 
 using std::cout;
 using std::cin;
@@ -9,8 +10,11 @@ using std::endl;
 using std::flush;
 
 int main() {
+#if IS_DEBUG
+    cout << "sizeof TicTacToe: " << sizeof TicTacToe << " bytes\n" << endl;
+#endif
     cout << "Solving Tic-tac-toe with minimax search "
-#if ABPRUNE
+#if AB_PRUNE
     "WITH"
 #else
     "WITHOUT"

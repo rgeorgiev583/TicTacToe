@@ -9,7 +9,7 @@ int TicTacToe::win_counter[N_POS + 1] = {},
     TicTacToe::node_counter = 0;
 
 bool TicTacToe::is_win() const {
-    const int pt = parent->turn;
+    const smallint pt = parent->turn;
     switch (move) {
     case 0:
         return s[1] == pt && s[2] == pt ||
@@ -55,7 +55,7 @@ TicTacToe::TicTacToe():
     search();
 }
 
-TicTacToe::TicTacToe(const TicTacToe *parent, int move):
+TicTacToe::TicTacToe(const TicTacToe *parent, smallint move):
     turn(parent->turn == MAX ? MIN : MAX), move(move), depth(parent->depth + 1), parent(parent) {
     ++node_counter;
     std::copy(std::begin(parent->s), std::end(parent->s), s);
@@ -82,7 +82,7 @@ TicTacToe::TicTacToe(const TicTacToe *parent, int move):
 }
 
 void TicTacToe::search() {
-    for (int p = 0; p < N_POS; ++p) {
+    for (smallint p = 0; p < N_POS; ++p) {
         if (s[p] == ZERO) {
             // ReSharper disable once CppNonReclaimedResourceAcquisition
             children[p] = new TicTacToe(this, p);
