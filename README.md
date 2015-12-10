@@ -17,12 +17,13 @@ The compiler must support the C++11 standard to compile, e.g. modern versions of
 On Windows, open the Visual Studio solution [TicTacToe.sln](TicTacToe.sln).
 
 On Linux,
+
 ```
 make
 bin/tictactoe
 ```
 
-## Evaluation function
+## Evaluation Function
 
 For a terminal state with n moves (5 <= n <= 9), the payoff v of the MAX player is evaluated with the following rule:
 
@@ -54,9 +55,11 @@ Statistics:
 | 8     | 0     | 72576 |
 | 9     | 81792 | 0     |
 
+```
 Draws   46080
 Leaves  255168
 Nodes   549946
+```
 
 ### With Pruning
 
@@ -76,9 +79,11 @@ Statistics:
 | 8     | 0     | 2299  |
 | 9     | 2294  | 0     |
 
+```
 Draws   1318
 Leaves  8453
 Nodes   20866
+```
 
 ## Further Work
 
