@@ -40,9 +40,9 @@ public:
     const smallint depth;
 
     // Current MAX's payoff
-    // (1) X just won
+    // (1) X wins
     //     MAX * (10 - depth)
-    // (2) O just won
+    // (2) O wins
     //     MIN * (10 - depth)
     // (3) Draw
     //     ZERO
@@ -50,7 +50,7 @@ public:
 
     smallint alpha, beta;
 
-    // The stone at each board position is MAX, MIN, or NEUTRAL.
+    // The stone at each board position is MAX, MIN, or ZERO.
     smallint s[N_POS];
 
     // The previous TicTacToe state (parent node)

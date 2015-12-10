@@ -13,7 +13,7 @@ using std::flush;
 bool play(TicTacToe *it);
 
 int main() {
-    cout << "Solving Tic-tac-toe with minimax search "
+    cout << "Solving Tic-tac-toe using minimax search "
 #if AB_PRUNE
     "WITH"
 #else
@@ -32,7 +32,7 @@ int main() {
     for (int d = 1; d <= 9; ++d)
         cout << d << '\t' << root.win_counter[d]
                   << '\t' << root.lose_counter[d] << '\n';
-    cout << "\nDraws\t"<< root.draw_counter << '\n'
+    cout << "\nDraws\t" << root.draw_counter << '\n'
          << "Leaves\t" << root.leaf_counter << '\n'
          << "Nodes\t" << root.node_counter << endl;
     cout << "\nPayoff at root node: " << static_cast<int>(root.v) << endl;
