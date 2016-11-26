@@ -34,7 +34,7 @@ bool play(TicTacToe *it) {
     while (true) { // Each move
         printf("\n");
         it->Print();
-        int move;
+        int move = 0;
         if (it->Turn == human) {
             // Human move
             printf("Your move: ");
