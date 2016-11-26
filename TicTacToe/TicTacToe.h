@@ -15,13 +15,6 @@ public:
     static const smallint MAX = 1, MIN = -1, ZERO = 0,
                           INF = 64, N_POS = 9;
 
-    // For statistical purpose
-    static int win_counter[],
-               lose_counter[],
-               draw_counter,
-               leaf_counter,
-               node_counter;
-
     // Construct the root node and its descendants (i.e. the complete game tree)
     TicTacToe();
 
