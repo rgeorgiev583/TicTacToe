@@ -63,13 +63,13 @@ public:
     // This is called during construction if necessary.
     void search();
 
+    // Print the current TicTacToe board to stdout
+    void Print() const;
+
 private:
     // Construct a non-root node and its descendants,
     // given its parent node and the move (0 ~ 8) from the parent state to the current state
     TicTacToe(const TicTacToe *parent, smallint move, smallint alpha, smallint beta);
 };
-
-// Print the current TicTacToe board to ostream
-std::ostream &operator<<(std::ostream &out, const TicTacToe &ttt);
 
 #endif

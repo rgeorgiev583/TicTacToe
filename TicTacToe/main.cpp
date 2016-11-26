@@ -1,14 +1,7 @@
+#include <cstdio>
 #include <cstdlib>
 #include <limits>
-#include <iostream>
-#include <ios>
-#include <chrono>
 #include "TicTacToe.h"
-
-using std::cout;
-using std::cin;
-using std::endl;
-using std::flush;
 
 bool play(TicTacToe *it);
 
@@ -19,14 +12,14 @@ int main() {
 }
 
 bool play(TicTacToe *it) {
-    cout << "\nChoose an option:\n"
-        << "(X) Play as MAX\n"
-        << "(O) Play as MIN\n"
-        << "(Q) Quit" << endl;
+    printf("\nChoose an option:\n"
+           "(X) Play as MAX\n"
+           "(O) Play as MIN\n"
+           "(Q) Quit\n");
     TicTacToe::smallint human = 0;
     while (!human) {
         char option;
-        cin >> option;
+        scanf("%c", &option);
         switch (option) {
         case 'Q': case 'q':
             return false;
@@ -39,21 +32,20 @@ bool play(TicTacToe *it) {
         }
     }
     for (;;) { // Each move
-        cout << '\n' << *it << flush;
+        printf("\n");
+        it->Print();
         int move;
         if (it->turn == human) {
             // Human move
-            cout << "Your move: " << flush;
+            printf("Your move: ");
             for (;;) {
-                cin >> move;
+                int moveX, moveY;
+                scanf("%d %d", &moveX, &moveY);
+                move = moveY * 3 + moveX;
                 if (0 <= move && move < TicTacToe::N_POS &&
                         it->s[move] == TicTacToe::ZERO)
                     break;
-                cout << "Invalid move!" << endl;
-                if (!cin) {
-                    cin.clear();
-                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                }
+                printf("Invalid move!\n");
             }
         } else {
             // Computer move
@@ -80,19 +72,20 @@ bool play(TicTacToe *it) {
                     }
                 }
             }
-            cout << "Computer move: " << move << endl;
+            printf("Computer move: \n");
         }
         it = it->get_child(move);
         if (it->depth == TicTacToe::N_POS || it->is_win()) {
             // Game just ended.
-            cout << '\n' << *it << flush;
+            printf("\n");
+            it->Print();
             TicTacToe::smallint human_payoff = human * it->v;
             if (human_payoff > 0)
-                cout << "You win!" << endl;
+                printf("You win!\n");
             else if (human_payoff < 0)
-                cout << "You lose!" << endl;
+                printf("You lose!\n");
             else
-                cout << "Draw!" << endl;
+                printf("Draw!\n");
             return true;
         }
     }
