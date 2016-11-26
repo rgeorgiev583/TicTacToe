@@ -2,14 +2,14 @@
 #include <cstdio>
 #include <iterator>
 
-TicTacToe *TicTacToe::get_child(smallint move) {
+TicTacToe *TicTacToe::GetChild(Smallint move) {
     if (!children[move])
         children[move] = new TicTacToe(this, move, -INF, +INF);
     return children[move];
 }
 
-bool TicTacToe::is_win() const {
-    const smallint pt = parent->turn;
+bool TicTacToe::IsWin() const {
+    const Smallint pt = parent->Turn;
     switch (move) {
     case 0:
         return (s[1] == pt && s[2] == pt) ||
@@ -50,36 +50,36 @@ bool TicTacToe::is_win() const {
 }
 
 TicTacToe::TicTacToe():
-        turn(MAX), move(-1), depth(0), alpha(-INF), beta(+INF), s(), parent(nullptr) {
-    search();
+        Turn(MAX), move(-1), Depth(0), alpha(-INF), beta(+INF), s(), parent(nullptr) {
+    Search();
 }
 
-TicTacToe::TicTacToe(const TicTacToe *parent, smallint move, smallint alpha, smallint beta):
-        turn(-parent->turn), move(move), depth(parent->depth + 1),
+TicTacToe::TicTacToe(const TicTacToe *parent, Smallint move, Smallint alpha, Smallint beta):
+        Turn(-parent->Turn), move(move), Depth(parent->Depth + 1),
         alpha(alpha), beta(beta), parent(parent) {
     std::copy(std::begin(parent->s), std::end(parent->s), s);
-    s[move] = parent->turn;
-    bool iswin = is_win(),
-         isfull = depth == N_POS;
+    s[move] = parent->Turn;
+    bool iswin = IsWin(),
+         isfull = Depth == N_POS;
     if (iswin || isfull) {
         // Game just ended.
         if (iswin) {
             // Someone just won.
-            v = parent->turn * (10 - depth);
+            v = parent->Turn * (10 - Depth);
         } else {
             // Draw
             v = ZERO;
         }
     } else {
         // Search for further cases
-        search();
+        Search();
     }
 }
 
-void TicTacToe::search() {
-    if (turn == MAX) {
-        smallint max = -INF;
-        for (smallint p = 0; p < N_POS; ++p) {
+void TicTacToe::Search() {
+    if (Turn == MAX) {
+        Smallint max = -INF;
+        for (Smallint p = 0; p < N_POS; ++p) {
             if (s[p] == ZERO) {
                 // ReSharper disable once CppNonReclaimedResourceAcquisition
                 children[p] = new TicTacToe(this, p, alpha, beta);
@@ -92,8 +92,8 @@ void TicTacToe::search() {
         }
         v = max;
     } else {
-        smallint min = +INF;
-        for (smallint p = 0; p < N_POS; ++p) {
+        Smallint min = +INF;
+        for (Smallint p = 0; p < N_POS; ++p) {
             if (s[p] == ZERO) {
                 // ReSharper disable once CppNonReclaimedResourceAcquisition
                 children[p] = new TicTacToe(this, p, alpha, beta);
