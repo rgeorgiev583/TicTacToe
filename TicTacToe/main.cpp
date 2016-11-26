@@ -1,15 +1,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <limits>
+
 #include "TicTacToe.h"
-
-bool play(TicTacToe *it);
-
-int main() {
-    TicTacToe root;
-    while (play(&root));
-    return EXIT_SUCCESS;
-}
 
 bool play(TicTacToe *it) {
     printf("\nChoose an option:\n"
@@ -89,4 +82,10 @@ bool play(TicTacToe *it) {
             return true;
         }
     }
+}
+
+int main() {
+    TicTacToe root;
+    while (play(&root));
+    return EXIT_SUCCESS;
 }
