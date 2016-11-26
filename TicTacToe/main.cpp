@@ -13,30 +13,8 @@ using std::flush;
 bool play(TicTacToe *it);
 
 int main() {
-    cout << "Solving Tic-tac-toe using minimax search "
-#if AB_PRUNE
-    "WITH"
-#else
-    "WITHOUT"
-#endif
-    << " alpha-beta pruning..." << endl;
-
-    auto t0 = std::chrono::high_resolution_clock::now();
-        // Root node
-        TicTacToe root;
-    auto t1 = std::chrono::high_resolution_clock::now();
-    auto dt = std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0);
-    cout << "Time elapsed: " << dt.count() / 1000. << " ms" << endl;
-
-    cout << "\nPly\tMAX\tMIN\n";
-    for (int d = 1; d <= 9; ++d)
-        cout << d << '\t' << root.win_counter[d]
-                  << '\t' << root.lose_counter[d] << '\n';
-    cout << "\nDraws\t" << root.draw_counter << '\n'
-         << "Leaves\t" << root.leaf_counter << '\n'
-         << "Nodes\t" << root.node_counter << endl;
-    cout << "\nPayoff at root node: " << static_cast<int>(root.v) << endl;
-    while (play(&root)) { }
+    TicTacToe root;
+    while (play(&root));
     return EXIT_SUCCESS;
 }
 
