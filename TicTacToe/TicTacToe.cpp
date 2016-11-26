@@ -85,10 +85,8 @@ void TicTacToe::search() {
                 children[p] = new TicTacToe(this, p, alpha, beta);
                 if (children[p]->v > max) {
                     max = children[p]->v;
-#if AB_PRUNE
                     if (max > alpha && (alpha = max) >= beta)
                         break;
-#endif
                 }
             }
         }
@@ -101,10 +99,8 @@ void TicTacToe::search() {
                 children[p] = new TicTacToe(this, p, alpha, beta);
                 if (children[p]->v < min) {
                     min = children[p]->v;
-#if AB_PRUNE
                     if (min < beta && (beta = min) <= alpha)
                         break;
-#endif
                 }
             }
         }

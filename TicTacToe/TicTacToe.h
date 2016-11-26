@@ -1,9 +1,6 @@
 #ifndef _TIC_TAC_TOE_H
 #define _TIC_TAC_TOE_H
 
-// Switch alpha-beta pruning on or off
-#define AB_PRUNE 1
-
 #include <iostream>
 #include <cstdint>
 
