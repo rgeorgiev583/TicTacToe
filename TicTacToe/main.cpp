@@ -1,6 +1,4 @@
 #include <cstdio>
-#include <cstdlib>
-#include <limits>
 
 #include "TicTacToe.h"
 
@@ -24,12 +22,11 @@ bool play(TicTacToe *it) {
             break;
         }
     }
-    while (true) { // Each move
+    while (true) {
         printf("\n");
         it->Print();
         int move = 0;
         if (it->Turn == human) {
-            // Human move
             printf("Your move: ");
             while (true) {
                 int moveX, moveY;
@@ -41,7 +38,6 @@ bool play(TicTacToe *it) {
                 printf("Invalid move!\n");
             }
         } else {
-            // Computer move
             if (human == TicTacToe::MAX) {
                 TicTacToe::Smallint min = +TicTacToe::INF;
                 for (TicTacToe::Smallint p = 0; p < TicTacToe::N_POS; ++p) {
@@ -69,7 +65,6 @@ bool play(TicTacToe *it) {
         }
         it = it->GetChild(move);
         if (it->Depth == TicTacToe::N_POS || it->IsWin()) {
-            // Game just ended.
             printf("\n");
             it->Print();
             TicTacToe::Smallint human_payoff = human * it->v;
@@ -87,5 +82,5 @@ bool play(TicTacToe *it) {
 int main() {
     TicTacToe root;
     while (play(&root));
-    return EXIT_SUCCESS;
+    return 0;
 }
