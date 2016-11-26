@@ -31,14 +31,14 @@ bool play(TicTacToe *it) {
             break;
         }
     }
-    for (;;) { // Each move
+    while (true) { // Each move
         printf("\n");
         it->Print();
         int move;
         if (it->Turn == human) {
             // Human move
             printf("Your move: ");
-            for (;;) {
+            while (true) {
                 int moveX, moveY;
                 scanf("%d %d", &moveX, &moveY);
                 move = moveY * 3 + moveX;
