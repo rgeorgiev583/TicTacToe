@@ -1,7 +1,6 @@
 #ifndef _TIC_TAC_TOE_H
 #define _TIC_TAC_TOE_H
 
-#include <iostream>
 #include <cstdint>
 
 // Represents a tic-tac-toe game state including the history,
