@@ -8,9 +8,8 @@
 
 class TicTacToe {
 public:
-    typedef int_fast8_t Integer;
-    static const Integer MAX = 1, MIN = -1, ZERO = 0,
-                          INF = 64, N_POS = 9;
+    using Integer = int_fast8_t;
+    static const Integer Max = 1, Min = -1, Zero = 0, Infinity = 64, Size = 9;
 
     // Construct the root node and its descendants (i.e. the complete game tree)
     TicTacToe();
@@ -41,7 +40,7 @@ public:
     Integer alpha, beta;
 
     // The stone at each board position is MAX, MIN, or ZERO.
-    Integer s[N_POS];
+    Integer s[Size];
 
     // The previous TicTacToe state (parent node)
     // For the empty board (root node), parent is nullptr
@@ -49,7 +48,7 @@ public:
 
     // Array containing pointers to the child nodes, indexed by the move (0 ~ 8).
     // nullptr indicates a nonexistent (invalid) child node.
-    TicTacToe *children[N_POS] = {};
+    TicTacToe *children[Size] = {};
 
     TicTacToe *GetChild(Integer move);
 

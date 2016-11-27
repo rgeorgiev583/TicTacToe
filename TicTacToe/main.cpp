@@ -17,10 +17,10 @@ bool play(TicTacToe *it) {
         case 'Q': case 'q':
             return false;
         case 'X': case 'x':
-            human = TicTacToe::MAX;
+            human = TicTacToe::Max;
             break;
         case 'O': case 'o':
-            human = TicTacToe::MIN;
+            human = TicTacToe::Min;
             break;
         }
     }
@@ -35,17 +35,17 @@ bool play(TicTacToe *it) {
                 int moveX, moveY;
                 scanf("%d %d", &moveX, &moveY);
                 move = moveY * 3 + moveX;
-                if (0 <= move && move < TicTacToe::N_POS &&
-                        it->s[move] == TicTacToe::ZERO)
+                if (0 <= move && move < TicTacToe::Size &&
+                        it->s[move] == TicTacToe::Zero)
                     break;
                 printf("Invalid move!\n");
             }
         } else {
             // Computer move
-            if (human == TicTacToe::MAX) {
-                TicTacToe::Integer min = +TicTacToe::INF;
-                for (TicTacToe::Integer p = 0; p < TicTacToe::N_POS; ++p) {
-                    if (it->s[p] == TicTacToe::ZERO) {
+            if (human == TicTacToe::Max) {
+                TicTacToe::Integer min = +TicTacToe::Infinity;
+                for (TicTacToe::Integer p = 0; p < TicTacToe::Size; ++p) {
+                    if (it->s[p] == TicTacToe::Zero) {
                         TicTacToe *child = it->GetChild(p);
                         if (child->v < min) {
                             min = child->v;
@@ -54,9 +54,9 @@ bool play(TicTacToe *it) {
                     }
                 }
             } else {
-                TicTacToe::Integer max = -TicTacToe::INF;
-                for (TicTacToe::Integer p = 0; p < TicTacToe::N_POS; ++p) {
-                    if (it->s[p] == TicTacToe::ZERO) {
+                TicTacToe::Integer max = -TicTacToe::Infinity;
+                for (TicTacToe::Integer p = 0; p < TicTacToe::Size; ++p) {
+                    if (it->s[p] == TicTacToe::Zero) {
                         TicTacToe *child = it->GetChild(p);
                         if (child->v > max) {
                             max = child->v;
@@ -68,7 +68,7 @@ bool play(TicTacToe *it) {
             printf("Computer move: \n");
         }
         it = it->GetChild(move);
-        if (it->Depth == TicTacToe::N_POS || it->IsWin()) {
+        if (it->Depth == TicTacToe::Size || it->IsWin()) {
             // Game just ended.
             printf("\n");
             it->Print();

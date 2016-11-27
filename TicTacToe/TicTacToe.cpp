@@ -4,7 +4,7 @@
 
 TicTacToe *TicTacToe::GetChild(Integer move) {
     if (!children[move])
-        children[move] = new TicTacToe(this, move, -INF, +INF);
+        children[move] = new TicTacToe(this, move, -Infinity, +Infinity);
     return children[move];
 }
 
@@ -50,7 +50,7 @@ bool TicTacToe::IsWin() const {
 }
 
 TicTacToe::TicTacToe():
-        Turn(MAX), move(-1), Depth(0), alpha(-INF), beta(+INF), s(), parent(nullptr) {
+        Turn(Max), move(-1), Depth(0), alpha(-Infinity), beta(+Infinity), s(), parent(nullptr) {
     Search();
 }
 
@@ -60,7 +60,7 @@ TicTacToe::TicTacToe(const TicTacToe *parent, Integer move, Integer alpha, Integ
     std::copy(std::begin(parent->s), std::end(parent->s), s);
     s[move] = parent->Turn;
     bool iswin = IsWin(),
-         isfull = Depth == N_POS;
+         isfull = Depth == Size;
     if (iswin || isfull) {
         // Game just ended.
         if (iswin) {
@@ -68,7 +68,7 @@ TicTacToe::TicTacToe(const TicTacToe *parent, Integer move, Integer alpha, Integ
             v = parent->Turn * (10 - Depth);
         } else {
             // Draw
-            v = ZERO;
+            v = Zero;
         }
     } else {
         // Search for further cases
@@ -77,10 +77,10 @@ TicTacToe::TicTacToe(const TicTacToe *parent, Integer move, Integer alpha, Integ
 }
 
 void TicTacToe::Search() {
-    if (Turn == MAX) {
-        Integer max = -INF;
-        for (Integer p = 0; p < N_POS; ++p) {
-            if (s[p] == ZERO) {
+    if (Turn == Max) {
+        Integer max = -Infinity;
+        for (Integer p = 0; p < Size; ++p) {
+            if (s[p] == Zero) {
                 // ReSharper disable once CppNonReclaimedResourceAcquisition
                 children[p] = new TicTacToe(this, p, alpha, beta);
                 if (children[p]->v > max) {
@@ -92,9 +92,9 @@ void TicTacToe::Search() {
         }
         v = max;
     } else {
-        Integer min = +INF;
-        for (Integer p = 0; p < N_POS; ++p) {
-            if (s[p] == ZERO) {
+        Integer min = +Infinity;
+        for (Integer p = 0; p < Size; ++p) {
+            if (s[p] == Zero) {
                 // ReSharper disable once CppNonReclaimedResourceAcquisition
                 children[p] = new TicTacToe(this, p, alpha, beta);
                 if (children[p]->v < min) {
@@ -116,10 +116,10 @@ TicTacToe::~TicTacToe() {
 char GetPlayerSign(TicTacToe::Integer p) {
     switch (p)
     {
-        case TicTacToe::MAX:
+        case TicTacToe::Max:
             return 'x';
 
-        case TicTacToe::MIN:
+        case TicTacToe::Min:
             return 'o';
 
         default:
