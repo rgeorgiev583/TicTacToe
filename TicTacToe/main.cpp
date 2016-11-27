@@ -9,7 +9,7 @@ bool play(TicTacToe *it) {
            "(X) Play as MAX\n"
            "(O) Play as MIN\n"
            "(Q) Quit\n");
-    TicTacToe::Smallint human = 0;
+    TicTacToe::Integer human = 0;
     while (!human) {
         char option;
         scanf("%c", &option);
@@ -43,8 +43,8 @@ bool play(TicTacToe *it) {
         } else {
             // Computer move
             if (human == TicTacToe::MAX) {
-                TicTacToe::Smallint min = +TicTacToe::INF;
-                for (TicTacToe::Smallint p = 0; p < TicTacToe::N_POS; ++p) {
+                TicTacToe::Integer min = +TicTacToe::INF;
+                for (TicTacToe::Integer p = 0; p < TicTacToe::N_POS; ++p) {
                     if (it->s[p] == TicTacToe::ZERO) {
                         TicTacToe *child = it->GetChild(p);
                         if (child->v < min) {
@@ -54,8 +54,8 @@ bool play(TicTacToe *it) {
                     }
                 }
             } else {
-                TicTacToe::Smallint max = -TicTacToe::INF;
-                for (TicTacToe::Smallint p = 0; p < TicTacToe::N_POS; ++p) {
+                TicTacToe::Integer max = -TicTacToe::INF;
+                for (TicTacToe::Integer p = 0; p < TicTacToe::N_POS; ++p) {
                     if (it->s[p] == TicTacToe::ZERO) {
                         TicTacToe *child = it->GetChild(p);
                         if (child->v > max) {
@@ -72,7 +72,7 @@ bool play(TicTacToe *it) {
             // Game just ended.
             printf("\n");
             it->Print();
-            TicTacToe::Smallint human_payoff = human * it->v;
+            TicTacToe::Integer human_payoff = human * it->v;
             if (human_payoff > 0)
                 printf("You win!\n");
             else if (human_payoff < 0)

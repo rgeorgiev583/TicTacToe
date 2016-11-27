@@ -2,14 +2,14 @@
 #include <cstdio>
 #include <iterator>
 
-TicTacToe *TicTacToe::GetChild(Smallint move) {
+TicTacToe *TicTacToe::GetChild(Integer move) {
     if (!children[move])
         children[move] = new TicTacToe(this, move, -INF, +INF);
     return children[move];
 }
 
 bool TicTacToe::IsWin() const {
-    const Smallint pt = parent->Turn;
+    const Integer pt = parent->Turn;
     switch (move) {
     case 0:
         return (s[1] == pt && s[2] == pt) ||
@@ -54,7 +54,7 @@ TicTacToe::TicTacToe():
     Search();
 }
 
-TicTacToe::TicTacToe(const TicTacToe *parent, Smallint move, Smallint alpha, Smallint beta):
+TicTacToe::TicTacToe(const TicTacToe *parent, Integer move, Integer alpha, Integer beta):
         Turn(-parent->Turn), move(move), Depth(parent->Depth + 1),
         alpha(alpha), beta(beta), parent(parent) {
     std::copy(std::begin(parent->s), std::end(parent->s), s);
@@ -78,8 +78,8 @@ TicTacToe::TicTacToe(const TicTacToe *parent, Smallint move, Smallint alpha, Sma
 
 void TicTacToe::Search() {
     if (Turn == MAX) {
-        Smallint max = -INF;
-        for (Smallint p = 0; p < N_POS; ++p) {
+        Integer max = -INF;
+        for (Integer p = 0; p < N_POS; ++p) {
             if (s[p] == ZERO) {
                 // ReSharper disable once CppNonReclaimedResourceAcquisition
                 children[p] = new TicTacToe(this, p, alpha, beta);
@@ -92,8 +92,8 @@ void TicTacToe::Search() {
         }
         v = max;
     } else {
-        Smallint min = +INF;
-        for (Smallint p = 0; p < N_POS; ++p) {
+        Integer min = +INF;
+        for (Integer p = 0; p < N_POS; ++p) {
             if (s[p] == ZERO) {
                 // ReSharper disable once CppNonReclaimedResourceAcquisition
                 children[p] = new TicTacToe(this, p, alpha, beta);

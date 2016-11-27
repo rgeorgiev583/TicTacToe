@@ -5,10 +5,11 @@
 
 // Represents a tic-tac-toe game state including the history,
 // i.e. a node in the game tree.
+
 class TicTacToe {
 public:
-    typedef int_fast8_t Smallint;
-    static const Smallint MAX = 1, MIN = -1, ZERO = 0,
+    typedef int_fast8_t Integer;
+    static const Integer MAX = 1, MIN = -1, ZERO = 0,
                           INF = 64, N_POS = 9;
 
     // Construct the root node and its descendants (i.e. the complete game tree)
@@ -19,14 +20,14 @@ public:
 
     // It is MAX's or MIN's Turn.
     // For empty board, Turn is MAX.
-    const Smallint Turn;
+    const Integer Turn;
 
     // The latest move (0 ~ 8) that led to the current state
     // (meaningless for root node)
-    const Smallint move;
+    const Integer move;
 
     // Depth of the node in the tree (0 ~ 9)
-    const Smallint Depth;
+    const Integer Depth;
 
     // Current MAX's payoff
     // (1) X wins
@@ -35,12 +36,12 @@ public:
     //     MIN * (10 - Depth)
     // (3) Draw
     //     ZERO
-    Smallint v;
+    Integer v;
 
-    Smallint alpha, beta;
+    Integer alpha, beta;
 
     // The stone at each board position is MAX, MIN, or ZERO.
-    Smallint s[N_POS];
+    Integer s[N_POS];
 
     // The previous TicTacToe state (parent node)
     // For the empty board (root node), parent is nullptr
@@ -50,7 +51,7 @@ public:
     // nullptr indicates a nonexistent (invalid) child node.
     TicTacToe *children[N_POS] = {};
 
-    TicTacToe *GetChild(Smallint move);
+    TicTacToe *GetChild(Integer move);
 
     // Check if the last player has just won the game
     bool IsWin() const;
@@ -65,7 +66,7 @@ public:
 private:
     // Construct a non-root node and its descendants,
     // given its parent node and the move (0 ~ 8) from the parent state to the current state
-    TicTacToe(const TicTacToe *parent, Smallint move, Smallint alpha, Smallint beta);
+    TicTacToe(const TicTacToe *parent, Integer move, Integer alpha, Integer beta);
 };
 
 #endif
