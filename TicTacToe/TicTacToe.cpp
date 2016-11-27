@@ -113,7 +113,7 @@ TicTacToe::~TicTacToe() {
         delete child;
 }
 
-char GetPlayerSign(int p) {
+char GetPlayerSign(TicTacToe::Integer p) {
     switch (p)
     {
         case TicTacToe::MAX:
