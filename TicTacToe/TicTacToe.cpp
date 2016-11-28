@@ -96,7 +96,6 @@ void TicTacToe::Search()
         {
             if (s[p] == Zero)
             {
-                // ReSharper disable once CppNonReclaimedResourceAcquisition
                 children[p] = new TicTacToe(this, p, alpha, beta);
                 if (children[p]->v > max)
                 {
@@ -115,7 +114,6 @@ void TicTacToe::Search()
         {
             if (s[p] == Zero)
             {
-                // ReSharper disable once CppNonReclaimedResourceAcquisition
                 children[p] = new TicTacToe(this, p, alpha, beta);
                 if (children[p]->v < min)
                 {
