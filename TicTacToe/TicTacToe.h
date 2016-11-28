@@ -15,9 +15,9 @@ public:
 
     const Integer Turn, move, Depth;
 
-    Integer v;
+    Integer Payoff;
     Integer alpha, beta;
-    Integer s[Size];
+    Integer Board[Size];
 
     const TicTacToe* parent;
     TicTacToe *children[Size] = {};

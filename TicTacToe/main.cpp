@@ -41,7 +41,7 @@ bool play(TicTacToe *it)
                 scanf("%d %d", &moveX, &moveY);
                 move = moveY * 3 + moveX;
                 if (0 <= move && move < TicTacToe::Size &&
-                        it->s[move] == TicTacToe::Zero)
+                        it->Board[move] == TicTacToe::Zero)
                     break;
                 printf("Invalid move!\n");
             }
@@ -53,12 +53,12 @@ bool play(TicTacToe *it)
                 TicTacToe::Integer min = +TicTacToe::Infinity;
                 for (TicTacToe::Integer p = 0; p < TicTacToe::Size; ++p)
                 {
-                    if (it->s[p] == TicTacToe::Zero)
+                    if (it->Board[p] == TicTacToe::Zero)
                     {
                         TicTacToe *child = it->GetChild(p);
-                        if (child->v < min)
+                        if (child->Payoff < min)
                         {
-                            min = child->v;
+                            min = child->Payoff;
                             move = p;
                         }
                     }
@@ -69,12 +69,12 @@ bool play(TicTacToe *it)
                 TicTacToe::Integer max = -TicTacToe::Infinity;
                 for (TicTacToe::Integer p = 0; p < TicTacToe::Size; ++p)
                 {
-                    if (it->s[p] == TicTacToe::Zero)
+                    if (it->Board[p] == TicTacToe::Zero)
                     {
                         TicTacToe *child = it->GetChild(p);
-                        if (child->v > max)
+                        if (child->Payoff > max)
                         {
-                            max = child->v;
+                            max = child->Payoff;
                             move = p;
                         }
                     }
@@ -88,7 +88,7 @@ bool play(TicTacToe *it)
             // Game just ended.
             printf("\n");
             it->Print();
-            TicTacToe::Integer human_payoff = human * it->v;
+            TicTacToe::Integer human_payoff = human * it->Payoff;
             if (human_payoff > 0)
                 printf("You win!\n");
             else if (human_payoff < 0)
