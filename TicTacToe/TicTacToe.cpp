@@ -113,22 +113,22 @@ TicTacToe::~TicTacToe()
         delete child;
 }
 
-char GetPlayerSign(TicTacToe::Integer p) {
-    switch (p)
-    {
-        case TicTacToe::Max:
-            return 'x';
-
-        case TicTacToe::Min:
-            return 'o';
-
-        default:
-            return ' ';
-    }
-}
-
 void TicTacToe::Print() const
 {
+    auto getPlayerSign = [](TicTacToe::Integer p) {
+        switch (p)
+        {
+            case TicTacToe::Max:
+                return 'x';
+
+            case TicTacToe::Min:
+                return 'o';
+
+            default:
+                return ' ';
+        }
+    };
+
     printf(
         "+---+---+---+\n"
         "| %c | %c | %c |\n"
@@ -137,8 +137,8 @@ void TicTacToe::Print() const
         "+---+---+---+\n"
         "| %c | %c | %c |\n"
         "+---+---+---+\n",
-        GetPlayerSign(s[0]), GetPlayerSign(s[1]), GetPlayerSign(s[2]),
-        GetPlayerSign(s[3]), GetPlayerSign(s[4]), GetPlayerSign(s[5]),
-        GetPlayerSign(s[6]), GetPlayerSign(s[7]), GetPlayerSign(s[8])
+        getPlayerSign(s[0]), getPlayerSign(s[1]), getPlayerSign(s[2]),
+        getPlayerSign(s[3]), getPlayerSign(s[4]), getPlayerSign(s[5]),
+        getPlayerSign(s[6]), getPlayerSign(s[7]), getPlayerSign(s[8])
     );
 }
