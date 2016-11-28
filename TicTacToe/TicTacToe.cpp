@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <iterator>
 
 #include "TicTacToe.h"
 
