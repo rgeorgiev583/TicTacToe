@@ -130,8 +130,8 @@ void TicTacToe::Search()
 
 TicTacToe::~TicTacToe()
 {
-    for (Integer i = 0; i < Size; i++)
-        delete children[i];
+    for (TicTacToe* child: children)
+        delete child;
 }
 
 char GetPlayerSign(TicTacToe::Integer p) {
