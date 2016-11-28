@@ -6,7 +6,8 @@
 // Represents a tic-tac-toe game state including the history,
 // i.e. a node in the game tree.
 
-class TicTacToe {
+class TicTacToe
+{
 public:
     using Integer = int_fast8_t;
     static const Integer Max = 1, Min = -1, Zero = 0, Infinity = 64, Size = 9;
