@@ -1,5 +1,5 @@
-#ifndef _TIC_TAC_TOE_H
-#define _TIC_TAC_TOE_H
+#ifndef __TIC_TAC_TOE__
+#define __TIC_TAC_TOE__
 
 #include <cstdint>
 
@@ -32,4 +32,4 @@ private:
     TicTacToe(const TicTacToe* parent, Integer move, Integer alpha, Integer beta);
 };
 
-#endif
+#endif  // __TIC_TAC_TOE__
