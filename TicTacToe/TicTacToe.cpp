@@ -60,32 +60,15 @@ TicTacToe::TicTacToe():
 }
 
 TicTacToe::TicTacToe(const TicTacToe *parent, Integer move, Integer alpha, Integer beta):
-        Turn(-parent->Turn), move(move), Depth(parent->Depth + 1),
-        alpha(alpha), beta(beta), parent(parent)
+        Turn(-parent->Turn), move(move), Depth(parent->Depth + 1), alpha(alpha), beta(beta), parent(parent)
 {
     std::copy(std::begin(parent->s), std::end(parent->s), s);
     s[move] = parent->Turn;
-    bool iswin = IsWin(),
-         isfull = Depth == Size;
+    bool iswin = IsWin(), isfull = Depth == Size;
     if (iswin || isfull)
-    {
-        // Game just ended.
-        if (iswin)
-        {
-            // Someone just won.
-            v = parent->Turn * (10 - Depth);
-        }
-        else
-        {
-            // Draw
-            v = Zero;
-        }
-    }
+        v = iswin ? parent->Turn * (10 - Depth) : Zero;
     else
-    {
-        // Search for further cases
         Search();
-    }
 }
 
 void TicTacToe::Search()
@@ -94,7 +77,6 @@ void TicTacToe::Search()
     {
         Integer max = -Infinity;
         for (Integer p = 0; p < Size; ++p)
-        {
             if (s[p] == Zero)
             {
                 children[p] = new TicTacToe(this, p, alpha, beta);
@@ -105,14 +87,12 @@ void TicTacToe::Search()
                         break;
                 }
             }
-        }
         v = max;
     }
     else
     {
         Integer min = +Infinity;
         for (Integer p = 0; p < Size; ++p)
-        {
             if (s[p] == Zero)
             {
                 children[p] = new TicTacToe(this, p, alpha, beta);
@@ -123,7 +103,6 @@ void TicTacToe::Search()
                         break;
                 }
             }
-        }
         v = min;
     }
 }
