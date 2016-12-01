@@ -12,42 +12,42 @@ TicTacToe* TicTacToe::GetChild(Integer move)
 
 bool TicTacToe::IsWin() const
 {
-    const Integer pt = parent->Turn;
+    const Integer parentTurn = parent->Turn;
     switch (move)
     {
         case 0:
-            return (Board[1] == pt && Board[2] == pt) ||
-                   (Board[3] == pt && Board[6] == pt) ||
-                   (Board[4] == pt && Board[8] == pt);
+            return Board[1] == parentTurn && Board[2] == parentTurn ||
+                   Board[3] == parentTurn && Board[6] == parentTurn ||
+                   Board[4] == parentTurn && Board[8] == parentTurn;
         case 1:
-            return (Board[0] == pt && Board[2] == pt) ||
-                   (Board[4] == pt && Board[7] == pt);
+            return Board[0] == parentTurn && Board[2] == parentTurn ||
+                   Board[4] == parentTurn && Board[7] == parentTurn;
         case 2:
-            return (Board[1] == pt && Board[0] == pt) ||
-                   (Board[5] == pt && Board[8] == pt) ||
-                   (Board[4] == pt && Board[6] == pt);
+            return Board[1] == parentTurn && Board[0] == parentTurn ||
+                   Board[5] == parentTurn && Board[8] == parentTurn ||
+                   Board[4] == parentTurn && Board[6] == parentTurn;
         case 3:
-            return (Board[4] == pt && Board[5] == pt) ||
-                   (Board[0] == pt && Board[6] == pt);
+            return Board[4] == parentTurn && Board[5] == parentTurn ||
+                   Board[0] == parentTurn && Board[6] == parentTurn;
         case 4:
-            return (Board[3] == pt && Board[5] == pt) ||
-                   (Board[1] == pt && Board[7] == pt) ||
-                   (Board[0] == pt && Board[8] == pt) ||
-                   (Board[2] == pt && Board[6] == pt);
+            return Board[3] == parentTurn && Board[5] == parentTurn ||
+                   Board[1] == parentTurn && Board[7] == parentTurn ||
+                   Board[0] == parentTurn && Board[8] == parentTurn ||
+                   Board[2] == parentTurn && Board[6] == parentTurn;
         case 5:
-            return (Board[4] == pt && Board[3] == pt) ||
-                   (Board[2] == pt && Board[8] == pt);
+            return Board[4] == parentTurn && Board[3] == parentTurn ||
+                   Board[2] == parentTurn && Board[8] == parentTurn;
         case 6:
-            return (Board[7] == pt && Board[8] == pt) ||
-                   (Board[3] == pt && Board[0] == pt) ||
-                   (Board[4] == pt && Board[2] == pt);
+            return Board[7] == parentTurn && Board[8] == parentTurn ||
+                   Board[3] == parentTurn && Board[0] == parentTurn ||
+                   Board[4] == parentTurn && Board[2] == parentTurn;
         case 7:
-            return (Board[6] == pt && Board[8] == pt) ||
-                   (Board[4] == pt && Board[1] == pt);
+            return Board[6] == parentTurn && Board[8] == parentTurn ||
+                   Board[4] == parentTurn && Board[1] == parentTurn;
         case 8:
-            return (Board[7] == pt && Board[6] == pt) ||
-                   (Board[5] == pt && Board[2] == pt) ||
-                   (Board[4] == pt && Board[0] == pt);
+            return Board[7] == parentTurn && Board[6] == parentTurn ||
+                   Board[5] == parentTurn && Board[2] == parentTurn ||
+                   Board[4] == parentTurn && Board[0] == parentTurn;
         default:
             return false;
     }
@@ -64,9 +64,9 @@ TicTacToe::TicTacToe(const TicTacToe *parent, Integer move, Integer alpha, Integ
 {
     std::copy(std::begin(parent->Board), std::end(parent->Board), Board);
     Board[move] = parent->Turn;
-    bool iswin = IsWin(), isfull = Depth == Size;
-    if (iswin || isfull)
-        Payoff = iswin ? parent->Turn * (10 - Depth) : Zero;
+    bool isWin = IsWin(), isFull = Depth == Size;
+    if (isWin || isFull)
+        Payoff = isWin ? parent->Turn * (10 - Depth) : Zero;
     else
         Search();
 }
@@ -109,19 +109,19 @@ void TicTacToe::Search()
 
 TicTacToe::~TicTacToe()
 {
-    for (TicTacToe* child: children)
+    for (auto child: children)
         delete child;
 }
 
 void TicTacToe::Print() const
 {
-    auto getPlayerSign = [](TicTacToe::Integer p) {
-        switch (p)
+    auto getPlayerSign = [](Integer turn) {
+        switch (turn)
         {
-            case TicTacToe::Max:
+            case Max:
                 return 'x';
 
-            case TicTacToe::Min:
+            case Min:
                 return 'o';
 
             default:
