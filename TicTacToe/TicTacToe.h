@@ -27,13 +27,13 @@ public:
     Integer Payoff;
     Integer Board[Size];
 
-    TicTacToe* GetChild(Integer move);
+    TicTacToe& GetChild(Integer move);
 
     bool IsWin() const;
     void Print() const;
 
 private:
-    TicTacToe(const TicTacToe* parent, Integer move, Integer alpha, Integer beta);
+    TicTacToe(const TicTacToe& parent, Integer move, Integer alpha, Integer beta);
 };
 
 #endif  // __TIC_TAC_TOE__

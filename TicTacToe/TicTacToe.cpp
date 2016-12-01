@@ -3,11 +3,11 @@
 
 #include "TicTacToe.h"
 
-TicTacToe* TicTacToe::GetChild(Integer move)
+TicTacToe& TicTacToe::GetChild(Integer move)
 {
     if (!children[move])
-        children[move] = new TicTacToe(this, move, -Infinity, +Infinity);
-    return children[move];
+        children[move] = new TicTacToe(*this, move, -Infinity, +Infinity);
+    return *children[move];
 }
 
 bool TicTacToe::IsWin() const
@@ -59,14 +59,14 @@ TicTacToe::TicTacToe():
     Search();
 }
 
-TicTacToe::TicTacToe(const TicTacToe* parent, Integer move, Integer alpha, Integer beta):
-        Turn(-parent->Turn), move(move), Depth(parent->Depth + 1), alpha(alpha), beta(beta), parent(parent)
+TicTacToe::TicTacToe(const TicTacToe& parent, Integer move, Integer alpha, Integer beta):
+        Turn(-parent.Turn), move(move), Depth(parent.Depth + 1), alpha(alpha), beta(beta), parent(&parent)
 {
-    std::copy(std::begin(parent->Board), std::end(parent->Board), Board);
-    Board[move] = parent->Turn;
+    std::copy(std::begin(parent.Board), std::end(parent.Board), Board);
+    Board[move] = parent.Turn;
     bool isWin = IsWin(), isFull = Depth == Size;
     if (isWin || isFull)
-        Payoff = isWin ? parent->Turn * (10 - Depth) : Zero;
+        Payoff = isWin ? parent.Turn * (10 - Depth) : Zero;
     else
         Search();
 }
@@ -79,7 +79,7 @@ void TicTacToe::Search()
         for (Integer p = 0; p < Size; ++p)
             if (Board[p] == Zero)
             {
-                children[p] = new TicTacToe(this, p, alpha, beta);
+                children[p] = new TicTacToe(*this, p, alpha, beta);
                 if (children[p]->Payoff > max)
                 {
                     max = children[p]->Payoff;
@@ -95,7 +95,7 @@ void TicTacToe::Search()
         for (Integer p = 0; p < Size; ++p)
             if (Board[p] == Zero)
             {
-                children[p] = new TicTacToe(this, p, alpha, beta);
+                children[p] = new TicTacToe(*this, p, alpha, beta);
                 if (children[p]->Payoff < min)
                 {
                     min = children[p]->Payoff;
