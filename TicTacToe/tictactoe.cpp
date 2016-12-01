@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <iterator>
 
-#include "TicTacToe.h"
+#include "tictactoe.hpp"
 
 TicTacToe& TicTacToe::GetChild(Integer move)
 {
