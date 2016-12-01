@@ -59,7 +59,7 @@ TicTacToe::TicTacToe():
     Search();
 }
 
-TicTacToe::TicTacToe(const TicTacToe *parent, Integer move, Integer alpha, Integer beta):
+TicTacToe::TicTacToe(const TicTacToe* parent, Integer move, Integer alpha, Integer beta):
         Turn(-parent->Turn), move(move), Depth(parent->Depth + 1), alpha(alpha), beta(beta), parent(parent)
 {
     std::copy(std::begin(parent->Board), std::end(parent->Board), Board);
@@ -128,7 +128,6 @@ void TicTacToe::Print() const
                 return ' ';
         }
     };
-
     printf(
         "+---+---+---+\n"
         "| %c | %c | %c |\n"

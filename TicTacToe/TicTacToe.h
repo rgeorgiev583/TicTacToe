@@ -12,6 +12,7 @@ public:
 
 private:
     const TicTacToe* parent;
+
     Integer move, alpha, beta;
     TicTacToe* children[Size] {};
 
