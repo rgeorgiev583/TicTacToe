@@ -54,7 +54,7 @@ bool TicTacToe::IsWin() const
 }
 
 TicTacToe::TicTacToe():
-        Turn(Max), move(-1), Depth(0), alpha(-Infinity), beta(+Infinity), Board(), parent(nullptr)
+        Turn(Max), move(-1), Depth(0), alpha(-Infinity), beta(+Infinity), parent(nullptr)
 {
     Search();
 }
