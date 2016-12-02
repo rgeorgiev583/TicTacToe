@@ -59,14 +59,14 @@ TicTacToe::TicTacToe():
     Search();
 }
 
-TicTacToe::TicTacToe(const TicTacToe& parent, Integer move, Integer alpha, Integer beta):
-        Turn(-parent.Turn), move(move), Depth(parent.Depth + 1), alpha(alpha), beta(beta), parent(&parent)
+TicTacToe::TicTacToe(const TicTacToe& parentArg, Integer moveArg, Integer alphaArg, Integer betaArg):
+        parent(&parentArg), move(moveArg), alpha(alphaArg), beta(betaArg), Turn(-parent->Turn), Depth(parent->Depth + 1)
 {
-    std::copy(std::begin(parent.Board), std::end(parent.Board), Board);
-    Board[move] = parent.Turn;
+    std::copy(std::begin(parent->Board), std::end(parent->Board), Board);
+    Board[move] = parent->Turn;
     bool isWin = IsWin(), isFull = Depth == Size;
     if (isWin || isFull)
-        Payoff = isWin ? parent.Turn * (10 - Depth) : Zero;
+        Payoff = isWin ? parent->Turn * (10 - Depth) : Zero;
     else
         Search();
 }
