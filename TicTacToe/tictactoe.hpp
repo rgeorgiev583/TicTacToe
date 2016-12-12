@@ -24,8 +24,8 @@ public:
 
     const Integer Turn, Depth;
 
-    Integer Payoff;
-    Integer Board[Size];
+    Integer Payoff {};
+    Integer Board[Size] {};
 
     TicTacToe& GetChild(Integer move);
 
