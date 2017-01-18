@@ -3,11 +3,11 @@
 
 #include "TicTacToe.h"
 
-TicTacToe& TicTacToe::GetChild(Integer move)
+TicTacToe* TicTacToe::GetChild(Integer move)
 {
     if (!children[move])
-        children[move] = new TicTacToe(*this, move, -Infinity, +Infinity);
-    return *children[move];
+        children[move] = new TicTacToe(this, move, -Infinity, +Infinity);
+    return children[move];
 }
 
 bool TicTacToe::IsWin() const
@@ -54,13 +54,13 @@ bool TicTacToe::IsWin() const
 }
 
 TicTacToe::TicTacToe():
-        parent(nullptr), move(Min), alpha(-Infinity), beta(+Infinity), Turn(Max), Depth(Zero)
+        Turn(Max), move(-1), Depth(0), alpha(-Infinity), beta(+Infinity), parent(nullptr)
 {
     Search();
 }
 
-TicTacToe::TicTacToe(const TicTacToe& parentArg, Integer moveArg, Integer alphaArg, Integer betaArg):
-        parent(&parentArg), move(moveArg), alpha(alphaArg), beta(betaArg), Turn(-parent->Turn), Depth(parent->Depth + 1)
+TicTacToe::TicTacToe(const TicTacToe* parent, Integer move, Integer alpha, Integer beta):
+        Turn(-parent->Turn), move(move), Depth(parent->Depth + 1), alpha(alpha), beta(beta), parent(parent)
 {
     std::copy(std::begin(parent->Board), std::end(parent->Board), Board);
     Board[move] = parent->Turn;
@@ -79,7 +79,7 @@ void TicTacToe::Search()
         for (Integer p = 0; p < Size; ++p)
             if (Board[p] == Zero)
             {
-                children[p] = new TicTacToe(*this, p, alpha, beta);
+                children[p] = new TicTacToe(this, p, alpha, beta);
                 if (children[p]->Payoff > max)
                 {
                     max = children[p]->Payoff;
@@ -95,7 +95,7 @@ void TicTacToe::Search()
         for (Integer p = 0; p < Size; ++p)
             if (Board[p] == Zero)
             {
-                children[p] = new TicTacToe(*this, p, alpha, beta);
+                children[p] = new TicTacToe(this, p, alpha, beta);
                 if (children[p]->Payoff < min)
                 {
                     min = children[p]->Payoff;
