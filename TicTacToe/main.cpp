@@ -1,6 +1,6 @@
 #include <cstdio>
 
-#include "tictactoe.hpp"
+#include "TicTacToe.h"
 
 
 int main()
